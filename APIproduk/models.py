@@ -13,10 +13,12 @@ class Kategori(models.Model):
         return self.nama
     
 class Penukaran(models.Model):
-    _id = models.ObjectIdField()
     id_pengguna = models.CharField(max_length=128)
     jumlah = models.IntegerField()
     tanggal = models.DateField(auto_now_add=True)
+
+    class Meta:
+        abstract = True
     
 class Produk(models.Model):
     _id = models.ObjectIdField()
@@ -30,7 +32,7 @@ class Produk(models.Model):
         to = Kategori,
         on_delete = models.CASCADE
     )
-    penukaran = models.ArrayField(
+    penukaran = models.EmbeddedField(
         model_container = Penukaran
     )
     
