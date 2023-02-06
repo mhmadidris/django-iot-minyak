@@ -4,10 +4,17 @@ from .models import Minyak, Poin
 from .serializers import MinyakSerializers, PoinSerializer
 from rest_framework.response import Response
 
-
+#Riwayat semua inputan minyak
 @api_view(["GET"])
 def listMinyak(request):
     data = Minyak.objects.all()
+    serializer = MinyakSerializers(data, many=True)
+    return Response(serializer.data)
+
+#Riwayat inputan minyak berdasarkan nama
+@api_view(["GET"])
+def detailMinyak(request,username):
+    data = Minyak.objects.filter(user = username)
     serializer = MinyakSerializers(data, many=True)
     return Response(serializer.data)
 
@@ -22,29 +29,30 @@ def addMinyak(request):
     try:
         Poin.objects.create(
             user = request.data["user"],
-            # Rumus poin
-            poin = (int(minyak.volume) * 100)
+            poin = (int(minyak.volume) * 2)
         )
     except:
-        poin = int(Poin.objects.get(user = request.data["user"]).poin + (minyak.volume * 100))
+        poin = int(Poin.objects.get(user = request.data["user"]).poin + (minyak.volume * 2))
         updatePoin = Poin.objects.filter(user = request.data["user"])
         updatePoin.update(
             poin = poin
         )
     return redirect('/api/')
 
-
+#Riwayat semua poin
 @api_view(["GET"])
-def PoinView(request):
+def poinView(request):
     data = Poin.objects.all()
     serializer = PoinSerializer(data, many=True)
     return Response(serializer.data)
 
-# @api_view(["GET"])
-# def detailMinyak(request,username):
-#     data = Minyak.objects.filter(user = username)
-#     serializer = MinyakSerializers(data, many=True)
-#     return Response(serializer.data)
+#Riwayat semua poin berdasarkan nama
+@api_view(["GET"])
+def detailPoin(request, username):
+    data = Poin.objects.filter(user = username)
+    serializer = PoinSerializer(data, many=True)
+    return Response(serializer.data)
+
 
 # @api_view(["DELETE"])
 # def deleteMinyak(request, delete_id):
