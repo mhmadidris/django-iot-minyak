@@ -1,5 +1,5 @@
-# from django.db import models
 from djongo import models
+# from django.db import models as modelsDJA
 # from djongo.models import indexes
 
 class Kategori(models.Model):
@@ -11,14 +11,17 @@ class Kategori(models.Model):
 
     def __str__(self):
         return self.nama
-    
+
+
+
 class Penukaran(models.Model):
+    _id = models.ObjectIdField()
     id_pengguna = models.CharField(max_length=128)
     jumlah = models.IntegerField()
     tanggal = models.DateField(auto_now_add=True)
 
-    class Meta:
-        abstract = True
+    # class Meta:
+    #     abstract = True
     
 class Produk(models.Model):
     _id = models.ObjectIdField()
@@ -27,13 +30,11 @@ class Produk(models.Model):
     keterangan = models.CharField(max_length=128)
     id_mesin = models.CharField(max_length=128)
     gambar = models.CharField(max_length=128)
-    poin = models.IntegerField()
-    kategori = models.ArrayReferenceField(
-        to = Kategori,
-        on_delete = models.CASCADE
-    )
-    penukaran = models.EmbeddedField(
-        model_container = Penukaran
+    harga = models.IntegerField()
+    kategori = models.CharField(max_length=200, default="")
+    penukaran = models.ArrayField(
+        model_container = Penukaran,
+        default=[]
     )
     
     created = models.DateField(auto_now_add=True)
