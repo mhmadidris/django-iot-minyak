@@ -5,4 +5,5 @@ urlpatterns = [
     path('', views.semuaTransaksi),
     path('add/', views.addTransaksi),
     path('filterday/', views.filterHari),
+    path('filterBulan/', views.filterBulan),
 ]

@@ -1,10 +1,10 @@
-from django.shortcuts import redirect
 from rest_framework.decorators import api_view
 from .models import Transaksi
 from .serializers import TransaksiSerializers
 from rest_framework.response import Response
 from datetime import datetime
-from random import randint
+from dateutil.relativedelta import relativedelta
+from django.utils.timezone import now
 
 
 # Semua Transaksi
@@ -33,5 +33,14 @@ def addTransaksi(request):
 def filterHari(self):
     now = datetime.now().date()
     data = Transaksi.objects.filter(waktuTransaksi=now)
+    serializer = TransaksiSerializers(data, many=True)
+    return Response(serializer.data)
+
+
+# Filter Transaksi (Bulan)
+@api_view(["GET"])
+def filterBulan(self):
+    data = Transaksi.objects.filter(
+        waktuTransaksi=now().date()-relativedelta(months=1))
     serializer = TransaksiSerializers(data, many=True)
     return Response(serializer.data)
