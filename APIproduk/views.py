@@ -115,7 +115,7 @@ def produkOne(req, identifier):
             if 'kategori' in dataBaru:
                 dataBaru["kategori"] = ','.join(dataBaru["kategori"])
             
-            produkBaru = KategoriSerializers(data, data=dataBaru)
+            produkBaru = ProdukSerializers(data, data=dataBaru, partial=True)
 
             # cek validasi data 
             if produkBaru.is_valid():
@@ -140,7 +140,7 @@ def produkOne(req, identifier):
                 'pesan': 'Produk berhasil di hapus!'
             })
           
-    except InvalidId:
+    except (InvalidId, ObjectDoesNotExist) :
         return JsonResponse({
             'pesan': 'Produk tidak ditemukan!',
             'data': []
@@ -234,7 +234,7 @@ def kategoriOne(req, identifier):
         # edit kategori 
         elif req.method == 'PUT':
             dataBaru = JSONParser().parse(req)
-            kategoriBaru = KategoriSerializers(data, data=dataBaru)
+            kategoriBaru = KategoriSerializers(data, data=dataBaru, partial=True)
 
             # cek validasi data 
             if kategoriBaru.is_valid():
@@ -343,7 +343,7 @@ def tukarPoin(req):
             penukarannya[indexPenukaran]['selesai'] = pesanan['selesai']
             produknya['penukaran'] = penukarannya
 
-            updateProduk = ProdukSerializers(produk, data=produknya)
+            updateProduk = ProdukSerializers(produk, data=produknya, partial=True)
 
             if updateProduk.is_valid():
                 
