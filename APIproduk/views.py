@@ -259,7 +259,7 @@ def kategoriOne(req, identifier):
                 'pesan': 'Kategori berhasil di hapus!'
             })
     
-    except InvalidId:
+    except (InvalidId, ObjectDoesNotExist):
         return JsonResponse({
             'pesan': 'Kategori tidak ditemukan!',
             'data': []
