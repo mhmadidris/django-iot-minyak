@@ -17,8 +17,10 @@ class Kategori(models.Model):
 class Penukaran(models.Model):
     _id = models.ObjectIdField()
     id_pengguna = models.CharField(max_length=128)
+    kode = models.CharField(max_length=16, default='xxx') # baru
     jumlah = models.IntegerField()
-    tanggal = models.DateField(auto_now_add=True)
+    tanggal = models.DateField()
+    selesai = models.BooleanField(default=False) # barau
 
     # class Meta:
     #     abstract = True
