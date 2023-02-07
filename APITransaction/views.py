@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from .models import Transaksi
 from .serializers import TransaksiSerializers
 from rest_framework.response import Response
-from datetime import datetime
+from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from django.utils.timezone import now
 
@@ -28,19 +28,37 @@ def addTransaksi(request):
     transaksi.save()
 
 
-# Filter Transaksi (Hari)
+# Filter Transaksi (Hari ini)
 @api_view(["GET"])
-def filterHari(self):
+def filterSekarang(self):
     now = datetime.now().date()
     data = Transaksi.objects.filter(waktuTransaksi=now)
     serializer = TransaksiSerializers(data, many=True)
     return Response(serializer.data)
 
 
-# Filter Transaksi (Bulan)
+# Filter Transaksi (Kemarin)
+@api_view(["GET"])
+def filterHari(self):
+    data = Transaksi.objects.filter(
+        waktuTransaksi=now().date()-relativedelta(days=1))
+    serializer = TransaksiSerializers(data, many=True)
+    return Response(serializer.data)
+
+
+# Filter Transaksi (Sebulan Terakhir)
 @api_view(["GET"])
 def filterBulan(self):
     data = Transaksi.objects.filter(
         waktuTransaksi=now().date()-relativedelta(months=1))
+    serializer = TransaksiSerializers(data, many=True)
+    return Response(serializer.data)
+
+
+# Filter Transaksi (1 Tahun Terakhir)
+@api_view(["GET"])
+def filterTahun(self):
+    data = Transaksi.objects.filter(
+        waktuTransaksi=now().date()-relativedelta(years=1))
     serializer = TransaksiSerializers(data, many=True)
     return Response(serializer.data)
