@@ -11,6 +11,6 @@ class Transaksi(models.Model):
     volume = models.IntegerField(blank=True)
     poin = models.IntegerField(blank=True)
     jenis = models.TextField(blank=True)
-    waktuTransaksi = models.TextField(default=now().date())
+    waktuTransaksi = models.TextField(default=datetime.utcnow().date())
     cretedAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)

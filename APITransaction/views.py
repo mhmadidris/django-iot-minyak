@@ -2,9 +2,8 @@ from rest_framework.decorators import api_view
 from .models import Transaksi
 from .serializers import TransaksiSerializers
 from rest_framework.response import Response
-from datetime import datetime, timedelta
+from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from django.utils.timezone import now
 
 
 # Semua Transaksi
@@ -41,7 +40,7 @@ def filterSekarang(self):
 @api_view(["GET"])
 def filterHari(self):
     data = Transaksi.objects.filter(
-        waktuTransaksi=now().date()-relativedelta(days=1))
+        waktuTransaksi=datetime.now().date()-relativedelta(days=1))
     serializer = TransaksiSerializers(data, many=True)
     return Response(serializer.data)
 
@@ -50,7 +49,7 @@ def filterHari(self):
 @api_view(["GET"])
 def filterBulan(self):
     data = Transaksi.objects.filter(
-        waktuTransaksi=now().date()-relativedelta(months=1))
+        waktuTransaksi=datetime.now().date()-relativedelta(months=1))
     serializer = TransaksiSerializers(data, many=True)
     return Response(serializer.data)
 
@@ -59,6 +58,17 @@ def filterBulan(self):
 @api_view(["GET"])
 def filterTahun(self):
     data = Transaksi.objects.filter(
-        waktuTransaksi=now().date()-relativedelta(years=1))
+        waktuTransaksi=datetime.now().date()-relativedelta(years=1))
+    serializer = TransaksiSerializers(data, many=True)
+    return Response(serializer.data)
+
+
+# Filter Date Range
+@api_view(["GET"])
+def filterRange(self):
+    start_date = "2023-02-01"
+    end_date = "2023-02-28"
+    data = Transaksi.objects.filter(
+        waktuTransaksi=[start_date, end_date])
     serializer = TransaksiSerializers(data, many=True)
     return Response(serializer.data)
