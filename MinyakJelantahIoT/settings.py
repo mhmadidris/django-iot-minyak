@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
 
-    'Account',
+    'APIAuth',
     'APIproduk',
     'APImesin',
     'APIMinyak',
@@ -57,7 +57,7 @@ TEMPLATES = [
     },
 ]
 
-AUTH_USER_MODEL = 'Account.Account'
+AUTH_USER_MODEL = 'APIAuth.Authentication'
 
 WSGI_APPLICATION = 'MinyakJelantahIoT.wsgi.application'
 

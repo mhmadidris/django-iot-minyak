@@ -4,7 +4,7 @@ from django.contrib import messages
 
 from django.contrib.auth import get_user_model
 
-Account = get_user_model()
+Authentication = get_user_model()
 
 # Create your views here.
 
@@ -19,11 +19,11 @@ def register(request):
         phone = request.POST['phone']
         email = request.POST['email']
         password = request.POST['password']
-        if Account.objects.filter(email=email).exists():
+        if Authentication.objects.filter(email=email).exists():
             messages.info(request, 'email is already exist')
             return redirect(register)
         else:
-            user = Account.objects.create_user(
+            user = Authentication.objects.create_user(
                 password=password, email=email, phone=phone, name=name)
             user.set_password(password)
             user.save()

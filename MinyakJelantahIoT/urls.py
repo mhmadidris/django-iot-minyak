@@ -5,5 +5,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('mesin/', include('APImesin.urls')),
     path('produk/', include('APIproduk.urls')),
-    path('', include('Account.urls')),
+    path('users/', include('APIUserManagement.urls')),
+    path('', include('APIAuth.urls')),
 ]

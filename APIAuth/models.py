@@ -29,7 +29,7 @@ class AccountManager(BaseUserManager):
         return user
 
 
-class Account(AbstractBaseUser):
+class Authentication(AbstractBaseUser):
     name = models.TextField(blank=True, max_length=32)
     email = models.EmailField(verbose_name="email", max_length=32, unique=True)
     phone = models.TextField(max_length=16)
