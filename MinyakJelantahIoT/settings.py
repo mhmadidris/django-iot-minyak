@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
 
+    'Account',
     'APIproduk',
     'APImesin',
     'APIMinyak',
@@ -55,8 +56,9 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'MinyakJelantahIoT.wsgi.application'
+AUTH_USER_MODEL = 'Account.Account'
 
+WSGI_APPLICATION = 'MinyakJelantahIoT.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
